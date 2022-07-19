@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User ID map</title>
+</head>
+
+<body>
+    <center>
+        <h1>
+            Table with user ID mappings
+        </h1>
+        <table border=1px>
+            <tr>
+                <th>User ID</th>
+                <th>Username/Email</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </center>
+</body>

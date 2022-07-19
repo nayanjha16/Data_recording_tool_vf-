@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Recording Page</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+  <link href="{% static "css/bootstrap.min.css"%}" rel="stylesheet">
+  <link href="{% static "css/sb-admin-2.css"%}" rel="stylesheet">
+  <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet" type="text/css">
+
+  <script src="https://kit.fontawesome.com/7b0990d0b7.js" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js"></script>
+   <link href="{% static "css/animate.css"%}" rel="stylesheet">
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+   <style>
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom:0;
+      width: 80%;
+      background-color: blue;
+      color: white;
+      text-align: center;
+      padding-left: 30%;
+      padding-right:30%;
+    }
+    .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+   </style>
+</head>
+<body>
+    <center>
+<div id="stickybar" class="animated  bounceInLeft " style="width:83%;">
+
+        <div  style="height:60px;width:100%;background-color: rgb(52,128,143);display: flex;">
+            <p style="height:60px;width:10%"></p>
+            <p id="headertitle" class="animated  bounceInDown delay-1s"  style="height:60px;width:80%; color:whitesmoke;font-family:Georgia, 'Times New Roman', Times, serif;font-size:30px;text-align:center;float:center ">Collection Module </p>
+                <a href="{% url 'logout' %}"><button type="button" style ="width :10%; float: right; background-color: rgb(52,128,143);border: none;">Logout</button></a>
+        </div>
+</div>
+</center>
+<div class="container">
+   <center>
+    <h3>
+      <div class="form-group">
+          <p class="text-center" id="s_id">Senetence id : {{id}}</p>
+      </div>
+      <div class="form-group">
+        <label for="s_prompt">Please speak the following sentence:</label>
+    </div>
+  </h3>
+  <center>
+      <h2>{{prompt}}</h2><br>
+  </center>
+    <div class="form-group">
+    <div class="bg-white p-4 rounded shadow-sm h-100">
+        <form action="{% url 'upload_audio' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input id="formAudioField" name="audio" type="file" hidden="true" style ="opacity: 0.0;">
+            <input name="pid" value="{{id}}" hidden="true">
+          <button id="btnStart" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-microphone-lines"></i></button>
+          <button type="submit" name="save_all" id="btnStop" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-stop"></i></button>
+          <button id="audioPlay" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-play"></i></button>
+          <button type="submit" name="save_and_show_next" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa fa-arrow-circle-right fa-lg"></i></button>
+          <audio id="vid2" controls hidden="true" name="audio"> </audio>
+        </form>
+          <audio id="vid" controls hidden="true"> </audio>
+
+          </div>
+          </div>
+
+  </center>
+</div>
+<div style="height:262px "> </div>
+<script>//The above div is a dummy div for placing footer properly</script>
+<center>
+<div id="footer"  style="background: rgb(52,128,143);width:83%;">
+  <div class="container" style="color: black;">
+
+    <a class="planeText" href="https://www.iiit.ac.in/"> </a><a class="planeText" href="https://www.iiit.ac.in/"> </a><table>
+      <tbody><tr>
+        <td>
+        <table>
+          <tbody><tr>
+            <!--<td><img src="images/iiit_logo.png" width="60px" height="60px"></td>-->
+            <td><img src="{% static "images/iiit_logo.png"%}" width="60px" height="60px"> </td>
+            <td width="10px;"></td>
+            <td class="planeText" > <a href="https://www.iiit.ac.in/" style="color:black">International Institute of Information Technology </a>
+            <br>
+             <a href="https://www.iiit.ac.in/" style="color:black">Hyderabad</a>
+            </td>
+          </tr>
+        </tbody></table></td>
+
+        <td width="24%"></td>
+
+
+        </td>
+
+        <td width="30%"></td>
+
+        <td>
+        <table>
+          <tbody><tr>
+            <td style="text-align: right" class="planeText">  <a href="https://ihub-data.iiit.ac.in/" style="color:black">IHUB-Data </a>
+            <br>
+            <a href="https://ihub-data.iiit.ac.in/" style="color:black">Hyderabad</a>
+            </td>
+            <td width="10px;"></td>
+            <!--<td><img src="images/Ihub_logo.png" height="50px"></td>-->
+            <td><img src="{% static "images/Ihub_logo.png"%}" height="50px"> </td>
+          </tr>
+        </tbody></table></td>
+      </tr>
+    </tbody></table>
+
+  </div>
+    </div>
+</center>
+
+
+
+<script>
+
+        let constraintObj = { 
+            audio: true, 
+            video:false
+        }; 
+        
+        
+        //handle older browsers that might implement getUserMedia in some way
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+            navigator.mediaDevices.getUserMedia = function(constraintObj) {
+                let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                }
+                return new Promise(function(resolve, reject) {
+                    getUserMedia.call(navigator, constraintObj, resolve, reject);
+                });
+            }
+        }else{
+            navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                devices.forEach(device=>{
+                    console.log(device.kind.toUpperCase(), device.label);
+                    //, device.deviceId
+                })
+            })
+            .catch(err=>{
+                console.log(err.name, err.message);
+            })
+        }
+
+        navigator.mediaDevices.getUserMedia(constraintObj)
+        .then(function(mediaStreamObj) {
+            //connect the media stream to the first audio element
+            let audio = document.querySelector("#vid");
+            if ("srcObject" in audio) {
+                audio.srcObject = mediaStreamObj;
+            } else {
+                //old version
+                audio.src = window.URL.createObjectURL(mediaStreamObj);
+            }
+            
+            audio.onloadedmetadata = function(ev) {
+                //show in the audio element what is being captured by the microphone
+                //audio.play();
+            };
+            
+            //add listeners for saving audio
+            let start = document.getElementById('btnStart');
+            let stop = document.getElementById('btnStop');
+            let audioSave = document.getElementById('vid2');
+            let audioplayback=document.getElementById('audioPlay');
+            let formAudioEle = document.getElementById('formAudioField')
+
+            let mediaRecorder = new MediaRecorder(mediaStreamObj);
+            let chunks = [];
+            
+            start.addEventListener('click', (ev)=>{
+                mediaRecorder.start();
+                console.log(mediaRecorder.state);
+            });
+            stop.addEventListener('click', (ev)=>{
+                mediaRecorder.stop();
+                console.log(mediaRecorder.state);
+            });
+            mediaRecorder.ondataavailable = function(ev) {
+                chunks.push(ev.data);
+            }
+            mediaRecorder.onstop = (ev)=>{
+                let blob = new Blob(chunks, { 'type' : 'audio/wav;' });
+                chunks = [];
+                let audioURL = window.URL.createObjectURL(blob);
+                audioSave.src = audioURL;
+                let file = new File([blob], "audio.wav", {type:"audio/wav", lastModified:new Date().getTime()});
+                let container = new DataTransfer();
+                container.items.add(file);
+                formAudioEle.files = container.files;
+
+                //audioSave.play();
+
+                
+            }
+            audioplayback.addEventListener('click', (ev)=>{ //this is to playback the recorded audio
+                audioSave.play();
+                console.log("within audioplayback");
+            });
+        })
+        .catch(function(err) { 
+            console.log(err.name, err.message); 
+        });
+        
+        function playsound()
+        { audioSave.play();
+         }
+        
+    </script>
+
+
+<script>
+
+</script>
+
+</body>
+</html>

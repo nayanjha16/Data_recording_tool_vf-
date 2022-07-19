@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: gray;/*#04AA6D;*/
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<center><h1>Recording Tool LTRC IIITH</h1> <p>Recording Form </p>
+
+
+<form action="/action_page.php">
+  <br> </br>
+  <label for="s_id">Sentence/word_id:</label>
+  <input type="text" id="fname" name="fname">
+  <br> </br>
+  <label for="lname">Sentence/word prompt:</label>
+  <input type="text" id="lname" name="lname">
+  <br> <br>
+  
+  <!-- Manually overridden the style of the buttons using inline css -->
+  <div class="holder">
+            <div data-role="controls">
+                
+            
+  <input id="rec" class="record_button_class" type="button" style="background-color: gray; color:white" value="Record_Audio_start" onclick="change_record_button_status();">
+  </div>
+  <input id="adioPlay" type="audio/microphone" style="background-color: gray; color:white" value="Playback Recorded_Audio" onclick="msg()">
+  <input type="button" style="background-color:gray;  color:white" value="Discard" onclick="msg()">
+  <input type="submit" style="background-color: gray; color:white" value="Submit"> <br>
+<br>
+ <label for="comments">Comments from the speaker if any :</label>
+<br>
+<textarea id="comments" name="comments" rows="4" cols="50">
+
+</textarea>
+<br>
+<input type="submit" value="Final Submit">
+</div>
+</form>
+</center>
+
+<script>
+
+         
+        function change_record_button_status() {
+            alert("within the desired change_record_button_status method");
+            id_string="stop_rec";
+            string1="Record_Audio_start";
+            string2="Record_Audio_end";
+            if (document.getElementsByClassName('record_button_class')[0].id.localeCompare(id_string)==0)
+            {
+            document.getElementById("stop_rec").value=string1;
+            document.getElementById("stop_rec").style.backgroundColor = "gray";
+            document.getElementById("stop_rec").style.color = "white";
+            document.getElementById("stop_rec").id = "rec";
+            }
+
+            else
+            {
+                document.getElementById("rec").value=string2
+            document.getElementById("rec").style.backgroundColor = "red";
+            document.getElementById("rec").style.color = "black";
+            document.getElementById("rec").id = "stop_rec";
+
+            }
+            //var label_for_rec_button=document.getElementById("rec").value;
+            //alert(label_for_rec_button);
+            //var result=string1.localeCompare(label_for_rec_button);
+            
+           
+           //if (result == 0)//if the label of the button is record_Audio_start
+           //{ 
+            
+           //}
+        }
+
+          
+            
+
+          /*document.getElementById("stop_rec").addEventListener("click", function() {
+            alert("hello there"); 
+            string1="Record_Audio_start";
+            string2="Record_Audio_end";
+            
+            
+        });*/
+    </script>
+
+    <script>
+      //the second script tag to handle the audio recording in javascript 
+  let audioIN = { audio: true };
+  // audio is true, for recording
+
+  // Access the permission for use
+  // the microphone
+  navigator.mediaDevices.getUserMedia(audioIN)
+
+  // 'then()' method returns a Promise
+  .then(function (mediaStreamObj) {
+
+    // Connect the media stream to the
+    // first audio element
+    let audio = document.querySelector('audio');
+    //returns the recorded audio via 'audio' tag
+
+    // 'srcObject' is a property which
+    // takes the media object
+    // This is supported in the newer browsers
+    if ("srcObject" in audio) {
+    audio.srcObject = mediaStreamObj;
+    }
+    else { // Old version
+    audio.src = window.URL
+      .createObjectURL(mediaStreamObj);
+    }
+
+    // It will play the audio
+    audio.onloadedmetadata = function (ev) {
+
+    // Play the audio in the 2nd audio
+    // element what is being recorded
+    audio.play();
+    };
+
+    // Start record
+    let start = document.getElementById('rec');
+
+    // Stop record
+    let stop = document.getElementById('stop_rec');
+
+    // 2nd audio tag for play the audio
+    let playAudio = document.getElementById('adioPlay');
+
+    // This is the main thing to recorde
+    // the audio 'MediaRecorder' API
+    let mediaRecorder = new MediaRecorder(mediaStreamObj);
+    // Pass the audio stream
+
+    // Start event
+    start.addEventListener('click', function (ev) {
+    mediaRecorder.start();
+    // console.log(mediaRecorder.state);
+    })
+
+    // Stop event
+    stop.addEventListener('click', function (ev) {
+    mediaRecorder.stop();
+    // console.log(mediaRecorder.state);
+    });
+
+    // If audio data available then push
+    // it to the chunk array
+    mediaRecorder.ondataavailable = function (ev) {
+    dataArray.push(ev.data);
+    }
+
+    // Chunk array to store the audio data
+    let dataArray = [];
+
+    // Convert the audio data in to blob
+    // after stopping the recording
+    mediaRecorder.onstop = function (ev) {
+
+    // blob of type mp3
+    let audioData = new Blob(dataArray,
+          { 'type': 'audio/mp3;' });
+      
+    // After fill up the chunk
+    // array make it empty
+    dataArray = [];
+
+    // Creating audio url with reference
+    // of created blob named 'audioData'
+    let audioSrc = window.URL
+      .createObjectURL(audioData);
+
+    // Pass the audio url to the 2nd video tag
+    playAudio.src = audioSrc;
+    }
+  })
+
+  // If any error occurs then handles the error
+  .catch(function (err) {
+    console.log(err.name, err.message);
+  });
+</script>
+
+</body>
+</html>

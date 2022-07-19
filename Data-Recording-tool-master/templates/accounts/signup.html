@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/sb-admin-2.css' %}"/>
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+  <style>
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom:0;
+      width: 80%;
+      background-color: blue;
+      color: white;
+      text-align: center;
+      padding-left: 30%;
+      padding-right:30%;
+    }
+   </style>
+  <script src="js/jquery-1.10.2.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/sb-admin-2.js"></script>
+</head>
+<body>
+  <center>
+    <div id="stickybar" class="animated  bounceInLeft " style="width:83%;"> 
+      <p id="headertitle" class="animated  bounceInDown delay-1s" style="height:60px;width:100%;background-color: rgb(52,128,143);color:whitesmoke;font-family:Georgia, 'Times New Roman', Times, serif;font-size:30px;text-align:center">User Signup Form</p>
+    </div>
+  </center>
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Fill this form to Sign up!</h4>
+            </div>
+            {{errors}}
+            <div class="panel-body">
+              <form role="form" method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="f_name" >First Name:</label>
+                  <input type="text" class="form-control" id="f_name" placeholder="Enter First Name" name="f_name" required>
+                </div>
+                <div class="form-group">
+                  <label for="l_name">Last Name:</label>
+                  <input type="text" class="form-control" id="l_name" placeholder="Enter Last Name" name="l_name" required>
+                </div>
+                <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select name="gender" class="form-control">
+                    <option value="male">Male </option>
+                    <option value="female">Female </option>
+                    <option value="other">Other </option>
+                 </select>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" min="0" class="form-control" id="age" placeholder="Enter your age" name="age" required>
+                </div>
+                <div class="form-group">
+                 <label for="contact">Contact:</label>
+                 <input type="text" class="form-control" id="contact" placeholder="Enter contact Number" name="contact" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email (this will be used as login username):</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="username" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="pwd">Set Password for login:</label>
+                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="disability">Language fluent in (comma separated):</label>
+                  <input type="text" class="form-control" id="disability" placeholder="Enter the languages fluent in" name="lang_fluent_in" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="disability">Disability:</label>
+                  <input type="text" class="form-control" id="disability" placeholder="Disclose disability if any" name="disability" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <center>
+        <div id="footer"  style="background: rgb(52,128,143);width:83%;">
+          <div class="container" style="color: black;">
+
+            <a class="planeText" href="https://www.iiit.ac.in/"> </a><a class="planeText" href="https://www.iiit.ac.in/"> </a><table>
+              <tbody><tr>
+                <td>
+                <table>
+                  <tbody><tr>
+                    <td><img src="{% static 'images/iiit_logo.png' %}" width="60px" height="60px"></td>
+                    <td width="10px;"></td>
+                    <td class="planeText" > <a href="https://www.iiit.ac.in/" style="color:black">International Institute of Information Technology,Hyderabad </a>
+                    <br>
+                    </td>
+                  </tr>
+                </tbody></table></td>
+
+                <td width="24%"></td>
+
+
+                </td>
+
+                <td width="30%"></td>
+
+                <td>
+                <table>
+                  <tbody><tr>
+                    <td style="text-align: right" class="planeText">  <a href="https://ihub-data.iiit.ac.in/" style="color:black">IHUB-Data </a>
+                    <br>
+                    <a href="https://ihub-data.iiit.ac.in/" style="color:black">Hyderabad</a>
+                    </td>
+                    <td width="10px;"></td>
+                    <td><img src="{% static 'images/Ihub_logo.png' %}" height="50px"></td>
+                  </tr>
+                </tbody></table></td>
+              </tr>
+            </tbody></table>
+
+          </div>
+            </div>
+      </center>
+
+
+</body>
+</html>
