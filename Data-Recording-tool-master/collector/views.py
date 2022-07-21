@@ -31,24 +31,31 @@ def dashboard(request):
 
 def upload_audio(request):
     if request.method == 'POST':
+        print("within the post method ")
         audio_upload = forms.audio_upload_form(request.POST, request.FILES)
         num= int(request.POST['num'])
+
         if 'save_all' in request.POST:
+            print("within save_all section")
             if audio_upload.is_valid():
+
                 audio = audio_upload.save(commit=False)
                 prompt = models.sentences.objects.get(id=request.POST['pid'])
                 
                 audio.sentence = prompt
                 audio.user = request.user
-                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id)+"_"+ +num+ "i.wav"
+                print("user identified")
+                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id)+"_"+ +str(num)+ "i.wav"
+                print("name assigned")
                 audio.save()
+                print("audio saved")
         else:
             if audio_upload.is_valid():
                 audio = audio_upload.save(commit=False)
                 prompt = models.sentences.objects.get(id=request.POST['pid'])
                 audio.sentence = prompt
                 audio.user = request.user
-                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id) +"_"+num+ ".wav"
+                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id) +"_"+str(num)+ ".wav"
                 audio.save()
 
 

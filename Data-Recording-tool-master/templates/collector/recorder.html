@@ -72,7 +72,7 @@
             <input name="pid" value="{{id}}" hidden="true">
           <input  type="hidden" id ="hidden_id" value =0 name="num">
           <button id="btnStart" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-microphone-lines"></i></button>
-          <button type="submit" name="save_all" id="btnStop" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-stop"></i></button>
+          <button type="submit" value ="save_all" name="save_all" id="btnStop" onclick="return false;"  class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-stop"></i></button>
           <button id="audioPlay" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-play"></i></button>
           <button type="submit" name="save_and_show_next" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa fa-arrow-circle-right fa-lg"></i></button>
           <audio id="vid2" controls hidden="true" name="audio"> </audio>
@@ -87,8 +87,11 @@
     <script>
     function num_update() {
         let hidden_count_update = parseInt(document.getElementById("hidden_id").value);
+
         hidden_count_update=hidden_count_update+1;
+
         document.getElementById("hidden_id").value=hidden_count_update;
+        alert(document.getElementById("hidden_id").value);
     }
     let btn_val = document.getElementById("btnStop");
     btn_val.addEventListener('click', event => {
