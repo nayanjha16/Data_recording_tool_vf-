@@ -40,7 +40,7 @@ def upload_audio(request):
                 
                 audio.sentence = prompt
                 audio.user = request.user
-                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id) +num+ "i.wav"
+                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id)+"_"+ +num+ "i.wav"
                 audio.save()
         else:
             if audio_upload.is_valid():
@@ -48,7 +48,7 @@ def upload_audio(request):
                 prompt = models.sentences.objects.get(id=request.POST['pid'])
                 audio.sentence = prompt
                 audio.user = request.user
-                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id) +num+ ".wav"
+                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id) +"_"+num+ ".wav"
                 audio.save()
 
 
