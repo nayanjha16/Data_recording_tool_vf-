@@ -70,6 +70,7 @@
             {% csrf_token %}
             <input id="formAudioField" name="audio" type="file" hidden="true" style ="opacity: 0.0;">
             <input name="pid" value="{{id}}" hidden="true">
+          <input id ="hidden_id" type="hidden" value =0 name="num">
           <button id="btnStart" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-microphone-lines"></i></button>
           <button type="submit" name="save_all" id="btnStop" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-stop"></i></button>
           <button id="audioPlay" onclick="return false;" class="btn btn-info btn-circle btn-circle-xl m-1"><i class="fa-solid fa-play"></i></button>
