@@ -45,11 +45,16 @@ def upload_audio(request):
                 audio.sentence = prompt
                 audio.user = request.user
                 print("user identified")
-                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id)+"_"+ +str(num)+ "i.wav"
+                audio.audio.name = str(audio.user.id) + "_" + str(audio.sentence.id)+"_"+ str(num)+ "i.wav"
+                print(audio.audio.name)
+                print(str(audio.user.id))
+                print(str(audio.sentence.id))
+                print(str(num))
                 print("name assigned")
                 audio.save()
                 print("audio saved")
         else:
+            print("within else segment")
             if audio_upload.is_valid():
                 audio = audio_upload.save(commit=False)
                 prompt = models.sentences.objects.get(id=request.POST['pid'])
